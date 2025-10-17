@@ -1,3 +1,17 @@
+<?php
+require_once 'config/database.php';
+
+$database = new Database();
+$db = $database->getConnection();
+
+$statsQuery = "SELECT stat_key, stat_value, stat_label FROM site_stats WHERE is_active = TRUE ORDER BY display_order ASC";
+$statsStmt = $db->query($statsQuery);
+$stats = $statsStmt->fetchAll();
+
+$servicesQuery = "SELECT * FROM services WHERE is_active = TRUE ORDER BY display_order ASC";
+$servicesStmt = $db->query($servicesQuery);
+$services = $servicesStmt->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -56,22 +70,12 @@
             <div class="hero-stats">
                 <div class="container">
                     <div class="stats-grid">
+                        <?php foreach ($stats as $stat): ?>
                         <div class="stat-item">
-                            <div class="stat-number">500+</div>
-                            <div class="stat-label">Clientes Satisfechos</div>
+                            <div class="stat-number"><?php echo htmlspecialchars($stat['stat_value']); ?></div>
+                            <div class="stat-label"><?php echo htmlspecialchars($stat['stat_label']); ?></div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-number">15+</div>
-                            <div class="stat-label">Años de Experiencia</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">1000+</div>
-                            <div class="stat-label">Proyectos Completados</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">Tasa de Éxito</div>
-                        </div>
+                        <?php endforeach; ?>
                     </div>
                 </div>
             </div>
@@ -84,79 +88,17 @@
                     <p class="section-subtitle">Soluciones integrales adaptadas a las necesidades de tu empresa</p>
                 </div>
                 <div class="services-grid">
+                    <?php foreach ($services as $service): ?>
                     <div class="service-card">
                         <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                                <line x1="8" y1="21" x2="16" y2="21"></line>
-                                <line x1="12" y1="17" x2="12" y2="21"></line>
-                            </svg>
+                            <?php echo $service['icon_svg']; ?>
                         </div>
-                        <h3 class="service-title">Desarrollo de Software</h3>
+                        <h3 class="service-title"><?php echo htmlspecialchars($service['title']); ?></h3>
                         <p class="service-description">
-                            Creamos aplicaciones personalizadas, robustas y escalables que impulsan la eficiencia de tu negocio.
+                            <?php echo htmlspecialchars($service['description']); ?>
                         </p>
                     </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                                <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                            </svg>
-                        </div>
-                        <h3 class="service-title">Consultoría TI</h3>
-                        <p class="service-description">
-                            Estrategias tecnológicas personalizadas para optimizar procesos y maximizar tu ROI.
-                        </p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"></path>
-                            </svg>
-                        </div>
-                        <h3 class="service-title">Cloud Computing</h3>
-                        <p class="service-description">
-                            Migración y gestión de infraestructura en la nube para mayor flexibilidad y seguridad.
-                        </p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                            </svg>
-                        </div>
-                        <h3 class="service-title">Ciberseguridad</h3>
-                        <p class="service-description">
-                            Protegemos tu información y sistemas con las últimas tecnologías de seguridad digital.
-                        </p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <line x1="12" y1="1" x2="12" y2="23"></line>
-                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
-                            </svg>
-                        </div>
-                        <h3 class="service-title">Business Intelligence</h3>
-                        <p class="service-description">
-                            Transforma datos en insights accionables para la toma de decisiones estratégicas.
-                        </p>
-                    </div>
-                    <div class="service-card">
-                        <div class="service-icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <polyline points="12 6 12 12 16 14"></polyline>
-                            </svg>
-                        </div>
-                        <h3 class="service-title">Soporte 24/7</h3>
-                        <p class="service-description">
-                            Asistencia técnica continua para garantizar la operación ininterrumpida de tu negocio.
-                        </p>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </section>
