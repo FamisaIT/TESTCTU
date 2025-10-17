@@ -27,3 +27,21 @@ build/
 .env
 .env.local
 .env.*.local
+
+# PHP
+vendor/
+composer.lock
+config/database.php
+*.cache
+*.tmp
+
+# Uploads
+uploads/
+images/uploads/
+
+# Session files
+sessions/
+
+# Sensitive files
+config.php
+.htpasswd

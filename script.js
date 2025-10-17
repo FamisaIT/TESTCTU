@@ -76,32 +76,62 @@ document.addEventListener('DOMContentLoaded', function() {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            company: document.getElementById('company').value,
-            message: document.getElementById('message').value
-        };
-
-        console.log('Form submitted:', formData);
+        const formData = new FormData();
+        formData.append('name', document.getElementById('name').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone', document.getElementById('phone').value);
+        formData.append('company', document.getElementById('company').value);
+        formData.append('message', document.getElementById('message').value);
 
         const submitBtn = contactForm.querySelector('button[type="submit"]');
         const originalText = submitBtn.textContent;
         submitBtn.textContent = 'Enviando...';
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            submitBtn.textContent = '¡Mensaje Enviado!';
-            submitBtn.style.background = '#28a745';
+        fetch('api/contact.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                submitBtn.textContent = '¡Mensaje Enviado!';
+                submitBtn.style.background = '#28a745';
+                contactForm.reset();
+                
+                alert(data.message);
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 2000);
+            } else {
+                submitBtn.textContent = 'Error al Enviar';
+                submitBtn.style.background = '#dc3545';
+                
+                alert('Error: ' + data.message);
+                
+                setTimeout(() => {
+                    submitBtn.textContent = originalText;
+                    submitBtn.style.background = '';
+                    submitBtn.disabled = false;
+                }, 2000);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            submitBtn.textContent = 'Error al Enviar';
+            submitBtn.style.background = '#dc3545';
+            
+            alert('Error al enviar el mensaje. Por favor, inténtalo de nuevo.');
             
             setTimeout(() => {
                 submitBtn.textContent = originalText;
                 submitBtn.style.background = '';
                 submitBtn.disabled = false;
-                contactForm.reset();
             }, 2000);
-        }, 1500);
+        });
     });
 
     const statsNumbers = document.querySelectorAll('.stat-number');

@@ -1,6 +1,6 @@
-# TechVision Solutions - Landing Page Empresarial
+# TechVision Solutions - Sistema Web Completo
 
-Landing page profesional para una empresa ficticia de consultoría tecnológica, desarrollada con HTML, CSS y JavaScript vanilla.
+Sistema web completo con **PHP y MySQL** para una empresa de consultoría tecnológica. Incluye landing page profesional, sistema de gestión de contactos y panel de administración funcional.
 
 ## 🎨 Características de Diseño
 
@@ -42,10 +42,87 @@ El diseño se adapta a tres breakpoints principales:
 
 ## 🔧 Tecnologías
 
+### Frontend
 - HTML5 semántico
 - CSS3 (Grid, Flexbox, Custom Properties)
-- JavaScript ES6+ (Vanilla)
+- JavaScript ES6+ (Vanilla, AJAX)
 - SVG para iconos
+
+### Backend
+- **PHP 7.4+** con PDO
+- **MySQL 5.7+** / MariaDB
+- Sistema de autenticación seguro
+- API REST para AJAX
+- Prepared Statements (seguridad contra SQL Injection)
+
+## 🚀 Instalación Rápida
+
+### Opción 1: Asistente de Instalación
+1. Copia los archivos al servidor web
+2. Abre `http://localhost/setup.php`
+3. Sigue las instrucciones
+
+### Opción 2: Manual
+```bash
+# Crear base de datos
+mysql -u root -p < database.sql
+
+# Configurar credenciales
+# Editar config/database.php
+
+# Acceder
+http://localhost/        # Sitio público
+http://localhost/admin/  # Panel admin (user: admin, pass: admin123)
+```
+
+📖 **Documentación completa**: Ver [INSTALL.md](INSTALL.md) y [README_PHP.md](README_PHP.md)
+
+## ✨ Funcionalidades PHP/MySQL
+
+### Sitio Público
+- ✅ Formulario de contacto funcional con validación
+- ✅ Estadísticas dinámicas desde base de datos
+- ✅ Servicios administrables
+- ✅ Sistema de newsletter
+- ✅ Envío AJAX sin recargar página
+
+### Panel de Administración (`/admin`)
+- ✅ Sistema de login seguro (Bcrypt)
+- ✅ Dashboard con estadísticas en tiempo real
+- ✅ Gestión de contactos (nuevo/leído/respondido)
+- ✅ Gestión de suscriptores newsletter
+- ✅ Edición de estadísticas del sitio
+- ✅ Gestión de testimonios
+- ✅ Diseño responsive
+
+### Seguridad
+- ✅ Prepared Statements (PDO)
+- ✅ Password hashing (Bcrypt)
+- ✅ Sanitización de inputs
+- ✅ Protección XSS
+- ✅ Sesiones seguras
+
+## 📁 Estructura del Proyecto
+
+```
+project/
+├── config/              # Configuración
+│   └── database.php     # Conexión a BD
+├── includes/            # Funciones auxiliares
+├── api/                 # Endpoints REST
+│   ├── contact.php      # API contactos
+│   ├── newsletter.php   # API newsletter
+│   └── stats.php        # API estadísticas
+├── admin/               # Panel administrativo
+│   ├── index.php        # Dashboard
+│   ├── login.php        # Login
+│   ├── contacts.php     # Gestión contactos
+│   └── ...
+├── database.sql         # Script de BD
+├── index.php            # Landing page
+├── setup.php            # Asistente instalación
+└── README_PHP.md        # Documentación PHP
+```
 
 ## 📄 Licencia
 
@@ -54,3 +131,7 @@ Proyecto de demostración - Uso libre
 ## 👥 Empresa Ficticia
 
 **TechVision Solutions** - Empresa ficticia de consultoría tecnológica y desarrollo de software empresarial.
+
+---
+
+**Nota**: Este no es solo un diseño estático. Es una **aplicación web completamente funcional** con backend PHP y MySQL listo para usar o personalizar.
